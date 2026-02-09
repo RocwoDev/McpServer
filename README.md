@@ -1,6 +1,60 @@
-This uses `uv` so make sure to install it with :
-`powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+### MCP Web Utilities Server
 
-After cloning the project, execute `crawl4ai-setup` in .venv (activate the environnement)
+Lightweight MCP server that exposes web search and page fetching tools.
 
-Never use print or something that STDOUT or you will break the json communication
+#### Features
+- `search_on_web` and `search_on_website` using `ddgs`.
+- `fetch_webpage` that returns simplified Markdown using `crawl4ai` with stealth settings.
+
+#### Requirements
+- Python 3.13+
+- `uv` installed
+
+Install `uv` on Windows (PowerShell):
+```
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+#### Setup
+```
+uv sync
+```
+
+Then activate the virtual environment and run the crawler setup:
+```
+.venv\Scripts\activate
+crawl4ai-setup
+```
+
+#### Run the server
+```
+uv run main.py
+```
+
+Or on Windows:
+```
+start_mcp_server.cmd
+```
+
+#### Tools
+`search_on_web(query: str, results: int = 10) -> str`
+- Returns results formatted as:
+```
+[title](url)
+description
+```
+
+`search_on_website(query: str, sites: list[str], results: int = 10) -> str`
+- Same format, restricted to the provided `sites`.
+
+`fetch_webpage(target_url: str) -> str`
+- Returns simplified Markdown for the target page.
+
+#### Tests
+```
+python tests.py
+```
+
+#### Notes
+- Avoid writing to `STDOUT` (e.g., `print`) when the server is running; it will break JSON RPC communication.
+- Network-dependent tests may fail if external services are blocked in the current environment.

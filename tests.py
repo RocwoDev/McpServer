@@ -10,7 +10,7 @@ class MyTestCase(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertNotEqual(result, "No results found")
         if result.startswith("Error:"):
-            self.fail(f"Erreur de recherche retournée: {result}")
+            self.fail(f"Search error returned: {result}")
 
     def test_search(self):
         result = search_on_web("python async await httpx requests examples", results=25)
