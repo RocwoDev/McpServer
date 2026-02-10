@@ -1,7 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 
-from fetch_webpage_utils import fetch_webpage_markdown
-from search_utils import _search_on_web, _build_site_query
+from src.utils.fetch_webpage import fetch_webpage_markdown
+from src.utils.search import _search_on_web, _build_site_query
 
 # Initialize FastMCP server
 mcp = FastMCP("McpServer")

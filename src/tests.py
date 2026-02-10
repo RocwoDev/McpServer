@@ -1,8 +1,8 @@
 import asyncio
 import unittest
 
-from fetch_webpage_utils import ERROR_EMPTY_URL, ERROR_EVENT_LOOP_PREFIX
-from mcp_server import fetch_webpage, search_on_web
+from src.utils.fetch_webpage import ERROR_EMPTY_URL, ERROR_EVENT_LOOP_PREFIX
+from src.mcp_server import fetch_webpage, search_on_web
 
 
 class MyTestCase(unittest.TestCase):

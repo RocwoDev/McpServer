@@ -1,3 +1,4 @@
+import sys
 from mcp_server import mcp
 
 def main():
