@@ -14,13 +14,6 @@ Lightweight MCP server that exposes web search and page fetching tools.
 
 #### Setup
 
-You can use the provided setup script to install all prerequisites and configure the environment:
-```powershell
-.\setup.ps1
-```
-
-Or manually:
-
 Install `uv` on Windows (PowerShell):
 ```
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
