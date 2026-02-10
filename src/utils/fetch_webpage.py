@@ -1,5 +1,5 @@
-import asyncio
-
+import contextlib
+import io
 from crawl4ai import AsyncWebCrawler, BrowserConfig, CrawlerRunConfig, CacheMode
 
 
@@ -20,18 +20,17 @@ _RUN_CONFIG = CrawlerRunConfig(
 )
 
 
-async def _crawl_to_markdown(target_url: str) -> str:
-    async with AsyncWebCrawler(config=_BROWSER_CONFIG) as crawler:
-        result = await crawler.arun(url=target_url, config=_RUN_CONFIG)
-    if result.success:
-        return result.markdown
-    return f"{ERROR_CRAWL_FAILED_PREFIX}: {result.error_message}"
-
-
-def fetch_webpage_markdown(target_url: str) -> str:
+async def fetch_webpage_markdown(target_url: str) -> str:
     if not target_url or not target_url.strip():
-        return ERROR_EMPTY_URL
-    try:
-        return asyncio.run(_crawl_to_markdown(target_url))
-    except RuntimeError as exc:
-        return f"{ERROR_EVENT_LOOP_PREFIX}: {exc}"
+        return "Error: Empty url"
+
+    capture = io.StringIO()
+    with contextlib.redirect_stdout(capture):
+        try:
+            async with AsyncWebCrawler(config=_BROWSER_CONFIG) as crawler:
+                result = await crawler.arun(url=target_url, config=_RUN_CONFIG)
+            if result.success:
+                return result.markdown
+            return f"Error: Unable to fetch webpage - {result.error_message or 'unknown'}"
+        except Exception as e:
+            return f"Error during crawl: {str(e)}"

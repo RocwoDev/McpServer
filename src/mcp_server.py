@@ -51,10 +51,10 @@ def search_on_website(query: str, sites: list[str], results: int = 10) -> str:
 
 
 @mcp.tool()
-def fetch_webpage(target_url: str) -> str:
+async def fetch_webpage(target_url: str) -> str:
     """
     Fetches a webpage and returns a simplified markdown representation.
     """
-    return fetch_webpage_markdown(target_url)
+    return await fetch_webpage_markdown(target_url)
 
 

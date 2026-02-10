@@ -24,15 +24,8 @@ class MyTestCase(unittest.TestCase):
         result = fetch_webpage("   ")
         self.assertEqual(result, ERROR_EMPTY_URL)
 
-    def test_fetch_webpage_event_loop_error(self):
-        async def call_fetch():
-            return fetch_webpage("https://example.com")
-
-        result = asyncio.run(call_fetch())
-        self.assertTrue(result.startswith(ERROR_EVENT_LOOP_PREFIX))
-
     def test_fetch_webpage_markdown_example(self):
-        result = fetch_webpage("https://example.com/")
+        result = asyncio.run(fetch_webpage("https://example.com/"))
         self.assertIsInstance(result, str)
         self.assertTrue(result.strip())
         self.assertIn("Example Domain", result)
