@@ -1,10 +1,25 @@
 from mcp.server.fastmcp import FastMCP
 
-from src.utils.fetch_webpage import fetch_webpage_markdown
-from src.utils.search import _search_on_web, _build_site_query
+from utils.fetch_webpage import fetch_webpage_markdown
+from utils.search import _search_on_web, _build_site_query
 
 # Initialize FastMCP server
 mcp = FastMCP("McpServer")
+
+@mcp.prompt()
+def clever_agent_instructions() -> str:
+    return """
+**Mandatory pipeline:**
+
+1. Understand the user's question completely.  
+2. If unsure about any word, term, acronym, name or concept → immediately web-search each unclear term (1 query per term).  
+3. Perform ALL searches in English by default (largest volume of quality results).  
+   Only switch to another language when you judge it clearly necessary for accuracy or relevance.  
+4. Once question is 100% clear → perform main web search to answer it.  
+5. From search results → open/fetch the most promising pages one by one to read full content.  
+6. With this information → give precise final answer.  
+7. If still no satisfactory answer → say "I couldn't find it" + ask 1–2 targeted clarifying questions.
+    """
 
 @mcp.tool()
 def search_on_web(query: str, results: int = 10) -> str:
