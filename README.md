@@ -3,7 +3,7 @@
 Lightweight MCP server that exposes web search and page fetching tools.
 
 #### Features
-- `search_on_web` and `search_on_website` using `ddgs`.
+- `search_on_web` and `search_on_website` using `ddgs` (DDGS | Dux Distributed Global Search, a multi-source search engine).
 - `fetch_webpage` that returns simplified Markdown using `crawl4ai` with stealth settings.
 
 #### Requirements
@@ -28,10 +28,10 @@ crawl4ai-setup
 
 #### Run the server
 ```
-uv run main.py
+uv run src\main.py
 ```
 
-Or on Windows:
+Or when developing:
 ```
 start_mcp_server.cmd
 ```
@@ -52,7 +52,7 @@ description
 
 #### Tests
 ```
-python tests.py
+python -m unittest src.tests
 ```
 
 #### Notes
