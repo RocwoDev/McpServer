@@ -10,12 +10,22 @@ Lightweight MCP server that exposes web search and page fetching tools.
 - Python 3.13+
 - `uv` installed
 
+
+
+#### Setup
+
+You can use the provided setup script to install all prerequisites and configure the environment:
+```powershell
+.\setup.ps1
+```
+
+Or manually:
+
 Install `uv` on Windows (PowerShell):
 ```
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-#### Setup
 ```
 uv sync
 ```
@@ -35,6 +45,26 @@ Or when developing:
 ```
 start_mcp_server.cmd
 ```
+
+#### LM Studio Configuration
+To use this server in LM Studio, add the following to your MCP settings (`mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "web-utilities": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "D:\\Dev\\McpServer",
+        "run",
+        "src\\main.py"
+      ]
+    }
+  }
+}
+```
+*Note: Replace `D:\\Dev\\McpServer` with the actual path to your project.*
 
 #### Tools
 `search_on_web(query: str, results: int = 10) -> str`
