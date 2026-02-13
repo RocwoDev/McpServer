@@ -1,3 +1,5 @@
+import datetime
+from typing import Dict, Any  # Ensure type hints are available for return structure
 from mcp.server.fastmcp import FastMCP
 
 from utils.fetch_webpage import fetch_webpage_markdown
@@ -24,13 +26,14 @@ def clever_agent_instructions() -> str:
 @mcp.tool()
 def search_on_web(query: str, results: int = 10) -> str:
     """
-    Searches the web for information related to the given query.\n
-    Return format :\n
-    [result 1 title](url)\n
-    result 1 description\n
-    [result 2 title](url)\n
-    result 2 description\n
+    Searches the web for information related to the given query.
+    Return format :
+    [result 1 title](url)
+    result 1 description
+    [result 2 title](url)
+    result 2 description
     ...
+    Use relevants links with `fetch_webpage` to get all the page content
     """
     return _search_on_web(query, results=results)
 
@@ -38,13 +41,14 @@ def search_on_web(query: str, results: int = 10) -> str:
 @mcp.tool()
 def search_on_website(query: str, sites: list[str], results: int = 10) -> str:
     """
-    Searches the web for information related to the given query, restricted to specific sites.\n
-    Return format :\n
-    [result 1 title](url)\n
-    result 1 description\n
-    [result 2 title](url)\n
-    result 2 description\n
+    Searches the web for information related to the given query, restricted to specific sites.
+    Return format :
+    [result 1 title](url)
+    result 1 description
+    [result 2 title](url)
+    result 2 description
     ...
+    Use relevants links with `fetch_webpage` to get all the page content
     """
     site_query = _build_site_query(query, sites)
     return _search_on_web(site_query, results=results)
@@ -58,3 +62,21 @@ async def fetch_webpage(target_url: str) -> str:
     return await fetch_webpage_markdown(target_url)
 
 
+@mcp.tool()
+def get_current_date() -> Dict[str, Any]:
+    """
+    Returns current UTC and local date-time strings in ISO format.
+
+    Return format:
+    {
+        "utc": "YYYY-MM-DDTHH:MM:SSZ",
+        "local": "YYYY-MM-DD HH:MM:SS"
+    }
+    """
+    utc_now = datetime.datetime.utcnow()
+    local_now = datetime.datetime.now()
+
+    return {
+        "utc": utc_now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "local": local_now.strftime("%Y-%m-%d %H:%M:%S")
+    }
