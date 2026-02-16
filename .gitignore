@@ -1,3 +1,6 @@
+# When you use the MCP server with LM Studio it can create a .ai/ folder
+.ai/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
